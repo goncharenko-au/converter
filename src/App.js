@@ -4,38 +4,52 @@ import './App.css';
 import Input from "./components/Input";
 import Header from "./components/Header";
 
+import Select from './components/Select';
+
+
+
+
 function App() {
   const [value, setValue] = useState("");
   const [curr, setCurr] = useState(0);
-  const [select, setSel] = useState("EUR")
+  // const [select, setSelect] = useState("EUR")
+  const [select, setSelect] = useState({
+    currency: "EUR",
+    rate: 33.525
 
-  async function getRate(num) {
+
+  })
+
+  async function getRate(v2) {
     axios.get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json")
       .then(response => response.data)
-      .then(data => data.find(item => item.cc === select))
+      .then(data => data.find(item => item.cc === select.currency))
       .then(object => object.rate)
       .then(rate => setCurr(rate));
   }
 
   useEffect(() => {
     getRate(value);
-  }, [select])
+  }, [select.currency])
 
+
+  const result = (curr * +value).toFixed(1);
   return (
     <Fragment>
       <div className="wrapper">
         <Header />
-        <Input value={value} setValue={setValue} curr={curr} />
-        <select value={select} onChange={(e) => setSel(e.target.value)}>
-          <option>USD</option>
-          <option>EUR</option>
-          <option>AUD</option>
-          <option>CAD</option>
-          <option>CNY</option>
-        </select>
-        <input value={(curr * +value).toFixed(1)} />
+        <div className="inner">
+          <div className="block">
+            <Input value={value} setValue={setValue} curr={curr} />
+          </div>
+          <div className="block">
+            <Input value={result} />
+            <Select select={select.currency} setSelect={setSelect} />
+            <div>1 гривня = {select.rate}</div>
+          </div>
+        </div>
       </div>
-    </Fragment>
+    </Fragment >
   )
 }
 

@@ -1,4 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
 body {
   background-color: #ebf0fc;
   font-family: "Open Sans", sans-serif;
@@ -28,7 +37,8 @@ body {
   color: #5b6780;
 }
 .select {
-  padding: 10px;
+  font-family: "Open Sans", sans-serif;
+  padding: 8px 10px;
   background-color: #ebf0fc;
   border: none;
   border: 1px solid #5b6780;
@@ -42,4 +52,13 @@ body {
 }
 .block:first-child {
   margin-right: 20px;
+}
+.uah {
+  padding: 9px 10px;
+  background-color: #ebf0fc;
+  border: 1px solid #5b6780;
+  border-radius: 5px;
+  font-size: 15px;
+  color: #5b6780;
+  line-height: normal;
 }

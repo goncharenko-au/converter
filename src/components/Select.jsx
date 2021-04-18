@@ -3,7 +3,7 @@ export default function Select({ select, setSelect }) {
         <>
             <select
                 className="select"
-                value={select} onChange={(e) => setSelect(e.target.value)}>
+                value={select} onChange={(e) => setSelect({ currency: e.target.value })}>
                 <option>USD</option>
                 <option>EUR</option>
                 <option>RUB</option>

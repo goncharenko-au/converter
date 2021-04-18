@@ -15,7 +15,7 @@ function App() {
   // const [select, setSelect] = useState("EUR")
   const [select, setSelect] = useState({
     currency: "EUR",
-    rate: 33.525
+    // rate: 33.525
 
 
   })
@@ -30,17 +30,18 @@ function App() {
 
   useEffect(() => {
     getRate(value);
-  }, [select.currency])
+  }, [select, value])
 
 
-  const result = (curr * +value).toFixed(1);
+  const result = +value.replace(/[^\d]/g) ? (+value * curr).toFixed(1) : "";
   return (
     <Fragment>
       <div className="wrapper">
         <Header />
         <div className="inner">
           <div className="block">
-            <Input value={value} setValue={setValue} curr={curr} />
+            <Input value={+value.replace(/[^\d]/g) ? +value : ""} setValue={setValue} curr={curr} />
+            <span className="uah">UAH</span>
           </div>
           <div className="block">
             <Input value={result} />

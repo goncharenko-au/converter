@@ -10,43 +10,95 @@ import Select from './components/Select';
 
 
 function App() {
-  const [value, setValue] = useState("");
-  const [curr, setCurr] = useState(0);
-  // const [select, setSelect] = useState("EUR")
+  const [value, setValue] = useState({
+    value1: "",
+    value2: ""
+
+  });
+  // const [curr, setCurr] = useState(0);
   const [select, setSelect] = useState({
+    array: [],
     currency: "EUR",
-    // rate: 33.525
-
-
+    activeObj: {
+      rate: 0,
+      txt: ""
+    },
   })
 
-  async function getRate(v2) {
+  async function getRate() {
     axios.get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json")
       .then(response => response.data)
-      .then(data => data.find(item => item.cc === select.currency))
-      .then(object => object.rate)
-      .then(rate => setCurr(rate));
+      // .then(data => data.find(item => item.cc === select.currency))
+      // .then(obj => setSelect({ ...select, array: obj, activeObj: obj, rate: obj.rate }))
+      .then(data => setSelect({ ...select, array: data, activeObj: data.find(item => item.cc === select.currency) }))
+
+
+
+    // .then(object => object.rate)
+    // .then(rate => setCurr(rate));
   }
 
   useEffect(() => {
-    getRate(value);
-  }, [select, value])
+    getRate();
+  }, [select.currency])
 
 
-  const result = +value.replace(/[^\d]/g) ? (+value * curr).toFixed(1) : "";
+  let changeNum = (e) => {
+    setValue({
+      ...value,
+      value1: e.target.value,
+      value2: +e.target.value * select.activeObj.rate
+    })
+  }
+  let changeNum2 = (e) => {
+    setValue({
+      ...value,
+      value2: +e.target.value,
+      value1: +e.target.value / select.activeObj.rate
+    })
+  }
+
+
+
+
+  let changeRes = (e) => {
+    setSelect({ ...select, currency: e.target.value });
+    setValue({
+      ...value,
+      value2: value.value1 * select.activeObj.rate
+    })
+  }
+
+  console.log(value.value1, value.value2)
   return (
     <Fragment>
       <div className="wrapper">
         <Header />
         <div className="inner">
           <div className="block">
-            <Input value={+value.replace(/[^\d]/g) ? +value : ""} setValue={setValue} curr={curr} />
+            <input
+              className="input"
+              onChange={changeNum}
+              value={value.value1} />
             <span className="uah">UAH</span>
           </div>
           <div className="block">
-            <Input value={result} />
-            <Select select={select.currency} setSelect={setSelect} />
-            <div>1 гривня = {select.rate}</div>
+            <input
+              className="input"
+              onChange={changeNum2}
+              // onChange={e => console.log(e.target.value)}
+              value={(value.value1 * select.activeObj.rate).toFixed(2)}
+            />
+            <select value={select.currency}
+              className="select"
+              onChange={changeRes}>
+              {select.array.map(item => {
+                return <option key={item.cc}>{item.cc}</option>
+              })
+              }
+            </select>
+
+            <div>1 гривня - {(select.activeObj.rate).toFixed(2) + " " + select.activeObj.txt.toLowerCase()}</div>
           </div>
         </div>
       </div>

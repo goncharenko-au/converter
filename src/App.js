@@ -22,6 +22,13 @@ function App() {
     },
   })
 
+  const [themeLight, setTheme] = useState(true);
+
+
+
+  let p = themeLight === false ? document.body.classList.add("dark") : document.body.classList.remove("dark");
+
+
   async function getRate() {
     axios.get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json")
       .then(response => response.data)
@@ -42,29 +49,38 @@ function App() {
   const etc = inputValue.name === "etc" ? (inputValue.valueOfItem * select.activeObj.rate).toFixed(2) : inputValue.valueOfItem;
 
 
+  const [image, setImage] = useState("https://image.freepik.com/free-vector/letter-g-with-love-logo-design_100735-23.jpg");
+
   return (
     <Fragment>
-      <div className="wrapper">
-        <Header />
-        <div className="inner">
-          <div className="block">
-            <Input name="etc" rate={ua} onChange={e => setInputValue({
-              name: "etc", valueOfItem: +e.target.value.replace(/[^\d]/g) ? +e.target.value.replace(/[^\d]/g) : ""
-            })} />
-            <Select currency={select.currency} changeRate={changeRate} arrayOfItems={select.arrayOfItems} />
-          </div>
-          <div className="block">
-            <Input name="ua" rate={etc} onChange={e => setInputValue({
-              name: "ua", valueOfItem: +e.target.value.replace(/[^\d]/g) ? +e.target.value.replace(/[^\d]/g) : ""
-            })} />
-            <span className="uah">UAH</span>
-            <div>{`1 ${select.activeObj.txt.toLowerCase()} - ${(select.activeObj.rate).toFixed(2)}  гривень`}</div>
+      <div className="container">
 
+        <input className={!themeLight ? "b" : "a"} type="checkbox" onClick={() => setTheme(!themeLight)} />
+
+
+        <div className="wrapper">
+          {/* <div>{ }</div> */}
+          <Header />
+          <div className="inner">
+            <div className="block">
+              <Input name="etc" rate={ua} onChange={e => setInputValue({
+                name: "etc", valueOfItem: +e.target.value.replace(/[^\d]/g) ? +e.target.value.replace(/[^\d]/g) : ""
+              })} />
+              <Select currency={select.currency} changeRate={changeRate} arrayOfItems={select.arrayOfItems} />
+            </div>
+            <div className="block">
+              <Input name="ua" rate={etc} onChange={e => setInputValue({
+                name: "ua", valueOfItem: +e.target.value.replace(/[^\d]/g) ? +e.target.value.replace(/[^\d]/g) : ""
+              })} />
+              <span className="uah">UAH</span>
+              <div className="text">{`1 ${select.activeObj.txt.toLowerCase()} - ${(select.activeObj.rate).toFixed(2)}  гривень`}</div>
+
+            </div>
+            <button
+              className="clear"
+              onClick={() => setInputValue({ valueOfItem: "", name: "" })}
+            >Очистити </button>
           </div>
-          <button
-            className="input"
-            onClick={() => setInputValue({ valueOfItem: "", name: "" })}
-          >Очистити </button>
         </div>
       </div>
     </Fragment >

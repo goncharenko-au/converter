@@ -1,23 +1,26 @@
-export default function Select({ select, setSelect }) {
+import PropTypes from 'prop-types';
+
+export default function Select({ currency, changeRate, arrayOfItems }) {
     return (
         <>
-            <select
+            <select value={currency}
                 className="select"
-                value={select} onChange={(e) => setSelect({ currency: e.target.value })}>
-                <option>USD</option>
-                <option>EUR</option>
-                <option>RUB</option>
-                <option>PLN</option>
-                <option>AUD</option>
-                <option>CAD</option>
-                <option>CNY</option>
-                <option>HRK</option>
-                <option>CZK</option>
-                <option>DKK</option>
-                <option>HKD</option>
-                <option>HUF</option>
-                <option>MAD</option>
+                onChange={changeRate}>
+                {arrayOfItems.map(item => {
+                    return <option key={item.cc}>{item.cc}</option>
+                })
+                }
             </select>
         </>
     )
+}
+Select.propTypes = {
+    currency: PropTypes.string.isRequired,
+    changeRate: PropTypes.func.isRequired,
+    arrayOfItems: PropTypes.arrayOf(PropTypes.object).isRequired
+}
+Select.defaultProps = {
+    currency: "",
+    changeRate: () => { },
+    arrayOfItems: []
 }

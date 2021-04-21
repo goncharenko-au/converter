@@ -1,16 +1,24 @@
-import React from "react";
-// export default function Input(props) {
-//     return (
-//         <>
-//             <input
-//                 className="input"
-//                 placeholder="Введіть ... "
-//                 value={props.value}
-//                 onChange={(e) => props.setValue(e.target.value)}
-//             />
-//         </>
-//     )
-// }
-export default function Input() {
+import PropTypes from 'prop-types';
+import { node } from 'prop-types';
 
+export default function Input({ name, rate, onChange }) {
+    return (
+        <>
+            <input name={name}
+                className="input"
+                value={rate}
+                onChange={onChange}
+            />
+        </>
+    )
+}
+
+Input.propTypes = {
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
+}
+Input.defaultProps = {
+    name: "",
+    rate: "",
+    onChange: () => { }
 }

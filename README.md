@@ -1,5 +1,5 @@
 # Stack:
-React, Reackt Hooks, Axios, API
+React, Reackt Hooks, Axios, Prop-types, API
 
 
 # Getting Started with Create React App

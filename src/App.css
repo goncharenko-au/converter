@@ -38,7 +38,7 @@ body {
 }
 .select {
   font-family: "Open Sans", sans-serif;
-  padding: 8px 10px;
+  padding: 9px 10px;
   background-color: #ebf0fc;
   border: none;
   border: 1px solid #5b6780;
@@ -48,6 +48,8 @@ body {
 }
 .inner {
   display: flex;
+  align-items: flex-start;
+  /* align-items: center; */
   /* justify-content: space-between; */
 }
 .block:first-child {

@@ -3,21 +3,18 @@ import axios from "axios";
 import './App.css';
 import Input from "./components/Input";
 import Header from "./components/Header";
-
 import Select from './components/Select';
 
 
 
-
 function App() {
-  const [value, setValue] = useState({
-    value1: "",
-    value2: ""
-
+  const [inputValue, setInputValue] = useState({
+    valueOfItem: "",
+    name: ""
   });
-  // const [curr, setCurr] = useState(0);
+
   const [select, setSelect] = useState({
-    array: [],
+    arrayOfItems: [],
     currency: "EUR",
     activeObj: {
       rate: 0,
@@ -28,14 +25,8 @@ function App() {
   async function getRate() {
     axios.get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json")
       .then(response => response.data)
-      // .then(data => data.find(item => item.cc === select.currency))
-      // .then(obj => setSelect({ ...select, array: obj, activeObj: obj, rate: obj.rate }))
-      .then(data => setSelect({ ...select, array: data, activeObj: data.find(item => item.cc === select.currency) }))
-
-
-
-    // .then(object => object.rate)
-    // .then(rate => setCurr(rate));
+      .then(data => setSelect({ ...select, arrayOfItems: data, activeObj: data.find(item => item.cc === select.currency) }))
+      .catch(e => console.log(e))
   }
 
   useEffect(() => {
@@ -43,63 +34,37 @@ function App() {
   }, [select.currency])
 
 
-  let changeNum = (e) => {
-    setValue({
-      ...value,
-      value1: e.target.value,
-      value2: +e.target.value * select.activeObj.rate
-    })
-  }
-  let changeNum2 = (e) => {
-    setValue({
-      ...value,
-      value2: +e.target.value,
-      value1: +e.target.value / select.activeObj.rate
-    })
-  }
-
-
-
-
-  let changeRes = (e) => {
+  const changeRate = (e) => {
     setSelect({ ...select, currency: e.target.value });
-    setValue({
-      ...value,
-      value2: value.value1 * select.activeObj.rate
-    })
   }
 
-  console.log(value.value1, value.value2)
+  const ua = inputValue.name === "ua" ? (inputValue.valueOfItem / select.activeObj.rate).toFixed(2) : inputValue.valueOfItem;
+  const etc = inputValue.name === "etc" ? (inputValue.valueOfItem * select.activeObj.rate).toFixed(2) : inputValue.valueOfItem;
+
+
   return (
     <Fragment>
       <div className="wrapper">
         <Header />
         <div className="inner">
           <div className="block">
-            <input
-              className="input"
-              onChange={changeNum}
-              value={value.value1} />
-            <span className="uah">UAH</span>
+            <Input name="etc" rate={ua} onChange={e => setInputValue({
+              name: "etc", valueOfItem: +e.target.value.replace(/[^\d]/g) ? +e.target.value.replace(/[^\d]/g) : ""
+            })} />
+            <Select currency={select.currency} changeRate={changeRate} arrayOfItems={select.arrayOfItems} />
           </div>
           <div className="block">
-            <input
-              className="input"
-              onChange={changeNum2}
-              // onChange={e => console.log(e.target.value)}
-              value={(value.value1 * select.activeObj.rate).toFixed(2)}
-            />
-            <select value={select.currency}
-              className="select"
-              onChange={changeRes}>
-              {select.array.map(item => {
-                return <option key={item.cc}>{item.cc}</option>
-              })
-              }
-            </select>
+            <Input name="ua" rate={etc} onChange={e => setInputValue({
+              name: "ua", valueOfItem: +e.target.value.replace(/[^\d]/g) ? +e.target.value.replace(/[^\d]/g) : ""
+            })} />
+            <span className="uah">UAH</span>
+            <div>{`1 ${select.activeObj.txt.toLowerCase()} - ${(select.activeObj.rate).toFixed(2)}  гривень`}</div>
 
-            <div>1 гривня - {(select.activeObj.rate).toFixed(2) + " " + select.activeObj.txt.toLowerCase()}</div>
           </div>
+          <button
+            className="input"
+            onClick={() => setInputValue({ valueOfItem: "", name: "" })}
+          >Очистити </button>
         </div>
       </div>
     </Fragment >
@@ -107,3 +72,4 @@ function App() {
 }
 
 export default App;
+

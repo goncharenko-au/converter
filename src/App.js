@@ -24,10 +24,7 @@ function App() {
 
   const [themeLight, setTheme] = useState(true);
 
-
-
-  let p = themeLight === false ? document.body.classList.add("dark") : document.body.classList.remove("dark");
-
+  const actualTheme = themeLight === false ? document.body.classList.add("dark") : document.body.classList.remove("dark");
 
   async function getRate() {
     axios.get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json")
@@ -48,18 +45,15 @@ function App() {
   const ua = inputValue.name === "ua" ? (inputValue.valueOfItem / select.activeObj.rate).toFixed(2) : inputValue.valueOfItem;
   const etc = inputValue.name === "etc" ? (inputValue.valueOfItem * select.activeObj.rate).toFixed(2) : inputValue.valueOfItem;
 
-
-  const [image, setImage] = useState("https://image.freepik.com/free-vector/letter-g-with-love-logo-design_100735-23.jpg");
-
   return (
     <Fragment>
       <div className="container">
-
-        <input className={!themeLight ? "b" : "a"} type="checkbox" onClick={() => setTheme(!themeLight)} />
-
-
+        <div className="theme">
+          <input className="theme__input" type="checkbox" id="checkbox" onChange={() => setTheme(!themeLight)} />
+          <label for="checkbox" className="theme__label">
+          </label>
+        </div>
         <div className="wrapper">
-          {/* <div>{ }</div> */}
           <Header />
           <div className="inner">
             <div className="block">
@@ -82,10 +76,9 @@ function App() {
             >Очистити </button>
           </div>
         </div>
-      </div>
+      </div >
     </Fragment >
   )
 }
-
 export default App;
 

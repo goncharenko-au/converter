@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { node } from 'prop-types';
 
 export default function Input({ name, rate, onChange }) {
     return (

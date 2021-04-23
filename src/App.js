@@ -1,10 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import './App.css';
-import Input from "./components/Input";
 import Header from "./components/Header";
-import Select from './components/Select';
-
+import Input from "./components/Input";
+import Select from "./components/Select"
 
 
 function App() {

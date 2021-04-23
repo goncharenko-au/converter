@@ -12,7 +12,6 @@ body {
   background-color: #ebf0fc;
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
-  /* color: #5b6780; */
   color: #100a30;
 }
 body.dark {
@@ -38,6 +37,7 @@ body.dark {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  border-radius: 0;
   position: absolute;
 }
 .theme__label {
@@ -85,6 +85,11 @@ body.dark {
   margin: 0;
   margin-bottom: 20px;
   padding-top: 20px;
+  font-weight: 400;
+}
+.title span {
+  text-transform: uppercase;
+  font-weight: 700;
 }
 .input {
   padding: 11px 11px 10px;
@@ -130,51 +135,7 @@ body.dark {
   border-top: 4px solid #5b6780;
   pointer-events: none;
   cursor: pointer;
-
-  /*  content: "\0025BC";
-font: normal normal normal 12px/1 FontAwesome; 
-  color: white;
-  right: 14px;
-  top: 4px;
-  height: 26px;
-  padding: 15px 0px 0px 8px;
-  position: absolute;
-  pointer-events: none;*/
 }
-
-/* 
-select,
-option,
- {
-  font-family: Arial, ArialHebrew, sans-serif;
-  font-size: x-large;
-  text-align: center;
-  color: #fff;
-  margin: 1vh;
-  padding: 1vh;
-} */
-
-/* input,
-select,
-option,
-button {
-  background-color: #333;
-  border-radius: 1vh;
-  border-color: transparent;
-} */
-/* select {
-  padding-right: 24px;
-} */
-/* .select {
-  font-family: "Open Sans", sans-serif;
-  padding: 9px 10px;
-  background-color: #ebf0fc;
-  border: none;
-  border: 1px solid #5b6780;
-  border-radius: 5px;
-  font-size: 15px;
-  color: #5b6780;
-} */
 .inner {
   display: flex;
   align-items: flex-start;
@@ -184,8 +145,7 @@ button {
   margin-right: 20px;
 }
 .uah {
-  /* padding: 10px 10px 11px;*/
-  padding: 10px 20px 11px 10px;
+  padding: 10px 23px 11px 10px;
   background-color: #ebf0fc;
   border: 1px solid #5b6780;
   border-radius: 5px;
@@ -199,6 +159,7 @@ button {
 }
 .clear {
   border: none;
+  font-family: "Open Sans", sans-serif;
   border: 1px solid #5b6780;
   background-color: #624de3;
   border-radius: 5px;
@@ -228,7 +189,7 @@ button {
     width: 250px;
   }
   .uah {
-    padding: 10px 27px 11px 16px;
+    /* padding: 10px 27px 11px 16px; */
   }
 
   .text {

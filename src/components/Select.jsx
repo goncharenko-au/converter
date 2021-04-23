@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 export default function Select({ currency, changeRate, arrayOfItems }) {
     return (
         <>
-            <select value={currency}
-                className="select"
-                onChange={changeRate}>
-                {arrayOfItems.map(item => {
-                    return <option key={item.cc}>{item.cc}</option>
-                })
-                }
-            </select>
+            <div className="select__wrapper">
+                <select value={currency}
+                    className="select"
+                    onChange={changeRate}>
+                    {arrayOfItems.map(item => {
+                        return <option key={item.cc}>{item.cc}</option>
+                    })
+                    }
+                </select>
+            </div>
         </>
     )
 }

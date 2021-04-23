@@ -24,6 +24,8 @@ body.dark {
 }
 .wrapper {
   max-width: 767px;
+  padding-left: 15px;
+  padding-right: 15px;
   margin: 0 auto;
   margin-top: 30px;
 }
@@ -107,7 +109,6 @@ body.dark {
   -moz-appearance: none;
   appearance: none;
 }
-
 .select__wrapper {
   position: relative;
   display: inline-block;
@@ -122,12 +123,12 @@ body.dark {
   color: #5b6780;
   line-height: normal;
 }
+
 .select__wrapper:after {
   position: absolute;
   content: "";
   top: 50%;
   right: 10px;
-
   width: 0;
   height: 0;
   border-left: 3px solid transparent;
@@ -170,12 +171,14 @@ body.dark {
 }
 .checkbox {
   margin-top: 30px;
-  /* opacity: 0.5; */
   appearance: none;
   position: relative;
   cursor: pointer;
 }
 @media (max-width: 700px) {
+  .wrapper {
+    max-width: 370px;
+  }
   .inner {
     display: block;
   }
@@ -188,9 +191,6 @@ body.dark {
   .input {
     width: 250px;
   }
-  .uah {
-    /* padding: 10px 27px 11px 16px; */
-  }
 
   .text {
     font-size: 12px;
@@ -200,6 +200,9 @@ body.dark {
   }
 }
 @media (max-width: 430px) {
+  .wrapper {
+    max-width: 310px;
+  }
   .input {
     width: 190px;
   }

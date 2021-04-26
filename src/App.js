@@ -20,16 +20,17 @@ function App() {
       txt: ""
     },
   })
+  const changeRate = (e) => {
+    setSelect({ ...select, currency: e.target.value });
+  };
 
   const [themeLight, setTheme] = useState(true);
 
-  const actualTheme = themeLight === false ? document.body.classList.add("dark") : document.body.classList.remove("dark");
-
-  async function getRate() {
+  function getRate() {
     axios.get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json")
       .then(response => response.data)
       .then(data => setSelect({ ...select, arrayOfItems: data, activeObj: data.find(item => item.cc === select.currency) }))
-      .catch(e => console.log(e))
+      .catch(e => console.log(e));
   }
 
   useEffect(() => {
@@ -37,15 +38,14 @@ function App() {
   }, [select.currency])
 
 
-  const changeRate = (e) => {
-    setSelect({ ...select, currency: e.target.value });
-  }
-
   const ua = inputValue.name === "ua" ? (inputValue.valueOfItem / select.activeObj.rate).toFixed(2) : inputValue.valueOfItem;
   const etc = inputValue.name === "etc" ? (inputValue.valueOfItem * select.activeObj.rate).toFixed(2) : inputValue.valueOfItem;
 
   return (
     <Fragment>
+      {themeLight === false ?
+        document.body.classList.add("dark") : document.body.classList.remove("dark")
+      }
       <div className="container">
         <div className="theme">
           <input className="theme__input" type="checkbox" id="checkbox" onChange={() => setTheme(!themeLight)} />

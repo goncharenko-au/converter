@@ -49,7 +49,7 @@ function App() {
       <div className="container">
         <div className="theme">
           <input className="theme__input" type="checkbox" id="checkbox" onChange={() => setTheme(!themeLight)} />
-          <label for="checkbox" className="theme__label">
+          <label htmlFor="checkbox" className="theme__label">
           </label>
         </div>
         <div className="wrapper">

@@ -7,6 +7,7 @@ export default function Input({ name, rate, onChange }) {
                 className="input"
                 value={rate}
                 onChange={onChange}
+                placeholder="..."
             />
         </>
     )

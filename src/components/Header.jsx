@@ -1,5 +1,6 @@
-export default function Header() {
+import React from "react";
 
+function Header() {
     return (
         <div>
             <h1 className="title"><span>Конвертер валют</span><br />
@@ -7,3 +8,4 @@ export default function Header() {
         </div>
     )
 }
+export default React.memo(Header);

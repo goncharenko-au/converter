@@ -1,6 +1,8 @@
+import React from "react";
 import PropTypes from 'prop-types';
 
-export default function Input({ name, rate, onChange }) {
+function Input({ name, rate, onChange }) {
+    console.log("input")
     return (
         <>
             <input name={name}
@@ -12,6 +14,7 @@ export default function Input({ name, rate, onChange }) {
         </>
     )
 }
+export default React.memo(Input);
 
 Input.propTypes = {
     name: PropTypes.string.isRequired,

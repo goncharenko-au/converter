@@ -2,6 +2,7 @@
 ### Стек використаних технологій: 
 React, 
 React Hooks, 
+HOC,
 API,
 Axios, 
 Prop-types.

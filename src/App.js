@@ -1,83 +1,30 @@
-import React, { Fragment, useState, useEffect } from "react";
-import axios from "axios";
+import React, { Fragment, useState } from "react";
+import { Theme, Header, Field } from "./components";
 import './App.css';
-import Header from "./components/Header";
-import Input from "./components/Input";
-import Select from "./components/Select"
 
 
-function App() {
-  const [inputValue, setInputValue] = useState({
-    valueOfItem: "",
-    name: ""
-  });
 
-  const [select, setSelect] = useState({
-    arrayOfItems: [],
-    currency: "EUR",
-    activeObj: {
-      rate: 0,
-      txt: ""
-    },
-  })
-  const changeRate = (e) => {
-    setSelect({ ...select, currency: e.target.value });
-  };
-
-  const [themeLight, setTheme] = useState(true);
-
-  function getRate() {
-    axios.get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json")
-      .then(response => response.data)
-      .then(data => setSelect({ ...select, arrayOfItems: data, activeObj: data.find(item => item.cc === select.currency) }))
-      .catch(e => console.log(e));
-  }
-
-  useEffect(() => {
-    getRate();
-  }, [select.currency])
-
-
-  const ua = inputValue.name === "ua" ? (inputValue.valueOfItem / select.activeObj.rate).toFixed(2) : inputValue.valueOfItem;
-  const etc = inputValue.name === "etc" ? (inputValue.valueOfItem * select.activeObj.rate).toFixed(2) : inputValue.valueOfItem;
+export default function App() {
+  const [isThemeLight, setIsThemeLight] = useState(true);
 
   return (
     <Fragment>
-      {themeLight === false ?
+      {isThemeLight === false ?
         document.body.classList.add("dark") : document.body.classList.remove("dark")
       }
       <div className="container">
         <div className="theme">
-          <input className="theme__input" type="checkbox" id="checkbox" onChange={() => setTheme(!themeLight)} />
-          <label htmlFor="checkbox" className="theme__label">
-          </label>
+          <Theme theme={isThemeLight} setIsThemeLight={setIsThemeLight} />
         </div>
         <div className="wrapper">
           <Header />
           <div className="inner">
-            <div className="block">
-              <Input name="etc" rate={ua} onChange={e => setInputValue({
-                name: "etc", valueOfItem: +e.target.value.replace(/[^\d]/g) ? +e.target.value.replace(/[^\d]/g) : ""
-              })} />
-              <Select currency={select.currency} changeRate={changeRate} arrayOfItems={select.arrayOfItems} />
-            </div>
-            <div className="block">
-              <Input name="ua" rate={etc} onChange={e => setInputValue({
-                name: "ua", valueOfItem: +e.target.value.replace(/[^\d]/g) ? +e.target.value.replace(/[^\d]/g) : ""
-              })} />
-              <span className="uah">UAH</span>
-              <div className="text">{`1 ${select.activeObj.txt.toLowerCase()} - ${(select.activeObj.rate).toFixed(2)}  гривень`}</div>
-
-            </div>
-            <button
-              className="clear"
-              onClick={() => setInputValue({ valueOfItem: "", name: "" })}
-            >Очистити </button>
+            <Field />
           </div>
         </div>
       </div >
     </Fragment >
   )
 }
-export default App;
+
 
